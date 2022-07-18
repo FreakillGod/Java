@@ -44,6 +44,7 @@ public class StringOp {
     }
 
     // print the powerset of the give string
+    //abc=> abc ac bc ab a b c...
     public static void powerSetOfString(String st, int i, String curr) {
 
         if (i == st.length()) {
@@ -54,11 +55,30 @@ public class StringOp {
         powerSetOfString(st, i + 1, curr);
     }
 
-    //print all the permutaion of the given string
-    //for abc=> bac, bca, acb, cab...
-    public static void permutaionOfString(String st){
+    //______________________________________________-need- attenstion______________________________________________
 
+    // print all the permutaion of the given string
+    // for abc=> bac, bca, acb, cab...
+    public static void permutaionOfString(String st, int l, int r) {
+        if (l == r) {
+            System.out.println(st);
+            return;
+        }
+        for (int i = l; i <= r; i++) {
+            st = swap(st, l, i);
+            permutaionOfString(st, l + 1, r);
+            st = swap(st, l, i);
+        }
     }
+
+    public static String swap(String st, int l, int r) {
+        char[] str = st.toCharArray();
+        char temp = str[r];
+        str[r] = str[l];
+        str[r] = temp;
+        return new String(str);
+    }
+
     // longest palindromic subsequence
     public static void lPSequence(String st) {
         int maxCount = 0;
@@ -95,7 +115,7 @@ public class StringOp {
 
         // lPSequence(lcp);
         // areRotations("abcd","cdab");
-        powerSetOfString("abc",0,"");
+        powerSetOfString("abc", 0, "");
 
     }
 }

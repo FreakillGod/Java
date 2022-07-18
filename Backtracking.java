@@ -16,14 +16,14 @@ public class Backtracking {
         }
 
         // diagonal left side
-        for (int i=row, j=col; i>=0 && j>=0; i--,j--) {
+        for (int i = row, j = col; i >= 0 && j >= 0; i--, j--) {
             if (arr[i][j] == 1) {
                 return false;
             }
         }
 
         // diagonal right side
-        for (int i=row, j=col; i>=0&& j>=0; i++,j--) {
+        for (int i = row, j = col; i >= 0 && j >= 0; i++, j--) {
             if (arr[i][col] == 1) {
                 return false;
             }
@@ -32,22 +32,25 @@ public class Backtracking {
         return true;
     }
 
-    public static boolean nQueen(int arr[][], int col, int N) {
-        if (col >= N)
+    
+
+    public static boolean nQueen(int arr[][], int row, int N) {
+
+        if (row >= N)
             return true;
 
-        for (int i = 0; i < N; i++) {
-            if (isSafe(arr, i, col)) {
-                arr[i][col] = 1;
+        for (int col = 0; col < N; col++) {
+            if (isSafe(arr, row, col)) {
+                arr[row][col] = 1;
+
+                if (nQueen(arr, row + 1, N) == true) {
+                    return true;
+                } else {
+                    arr[row][col] = 0;
+                }
             }
-            if (nQueen(arr, col + 1, N) == true)
-                return true;
-
-            arr[i][col] = 0; // Backtrack
         }
-
         return false;
-
     }
 
     public static boolean isPossible(int arr[][], int i) {
@@ -60,11 +63,12 @@ public class Backtracking {
 
     public static void main(String[] args) {
 
-        int arr[][] = { { 0, 0, 0, 0 },
+        int arr[][] = { 
+                { 0, 0, 0, 0 },
                 { 0, 0, 0, 0 },
                 { 0, 0, 0, 0 },
                 { 0, 0, 0, 0 } };
-        int queen = 4;
+        int queen = 3;
 
         System.out.println(nQueen(arr, arr.length, queen));
     }
