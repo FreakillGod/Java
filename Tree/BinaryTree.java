@@ -140,14 +140,41 @@ public class BinaryTree {
     }
 
     public static void leftView(Node root) {
-        //or rightView iykyk
+        // or rightView iykyk
         Map<Integer, Integer> map = new HashMap<>();
 
         addlevel(map, root, 0);
 
-        for(int value: map.values()){
+        for (int value : map.values()) {
             System.out.println(value);
         }
+    }
+
+    public static void addlvelForBottm(Node root, Map<Integer, Integer> map, int dist) {
+
+        // if (!map.containsKey(dist)) {
+            map.put(dist, root.data);
+        // }
+
+        if (root.left != null) {
+            addlvelForBottm(root.left, map, dist - 1);
+        }
+        if (root.right != null) {
+            addlvelForBottm(root.right, map, dist + 1);
+        }
+
+    }
+
+    public static void bottomView(Node root) {
+
+        Map<Integer, Integer> map = new HashMap<>();
+
+        addlvelForBottm(root, map, 0);
+
+        for (int value : map.values()) {
+            System.out.println(value);
+        }
+
     }
 
     public static void main(String[] args) {
@@ -162,6 +189,7 @@ public class BinaryTree {
         // System.out.println(height(root));
         // System.out.println(diam(root));
         // System.out.println(findMax(root));
-        leftView(root);
+        // leftView(root);
+        bottomView(root);
     }
 }
