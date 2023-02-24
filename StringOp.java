@@ -46,6 +46,7 @@ public class StringOp {
     // print the powerset of the give string
     //abc=> abc ac bc ab a b c...
     public static void powerSetOfString(String st, int i, String curr) {
+        // powerSetOfString("abc", 0, ""); initial value
 
         if (i == st.length()) {
             System.out.println(curr);
@@ -75,7 +76,7 @@ public class StringOp {
         char[] str = st.toCharArray();
         char temp = str[r];
         str[r] = str[l];
-        str[r] = temp;
+        str[l] = temp;
         return new String(str);
     }
 
@@ -115,7 +116,8 @@ public class StringOp {
 
         // lPSequence(lcp);
         // areRotations("abcd","cdab");
-        powerSetOfString("abc", 0, "");
+        // powerSetOfString("abc", 0, "");
+        permutaionOfString("abc",0,2);
 
     }
 }

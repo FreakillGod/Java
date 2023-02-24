@@ -4,8 +4,6 @@ import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.Map;
 import java.util.Queue;
-import java.util.Set;
-import java.util.Stack;
 
 class Node {
     Node left;
@@ -153,7 +151,7 @@ public class BinaryTree {
     public static void addlvelForBottm(Node root, Map<Integer, Integer> map, int dist) {
 
         // if (!map.containsKey(dist)) {
-            map.put(dist, root.data);
+        map.put(dist, root.data);
         // }
 
         if (root.left != null) {
@@ -177,6 +175,28 @@ public class BinaryTree {
 
     }
 
+    public static Node findCommonAnsister(Node root, int d1, int d2) {
+        if (root == null)
+            return null;
+
+        if (root.data == d1 || root.data == d2) {
+            return root;
+        }
+        Node left = findCommonAnsister(root.left, d1, d2);
+        Node right = findCommonAnsister(root.right, d1, d2);
+
+        if (left == null)
+            return right;
+        if (right == null)
+            return left;
+
+        return root;
+    }
+
+    public static void treeToDoubleLL(Node root) {
+
+    }
+
     public static void main(String[] args) {
 
         int arr[] = { 1, 2, -1, 3, -1, -1, 4, 5, -1, -1, 6, -1, -1 };
@@ -190,6 +210,7 @@ public class BinaryTree {
         // System.out.println(diam(root));
         // System.out.println(findMax(root));
         // leftView(root);
-        bottomView(root);
+        // bottomView(root);
+        System.out.println(findCommonAnsister(root, 5, 6).data);
     }
 }
