@@ -193,13 +193,78 @@ public class BinaryTree {
         return root;
     }
 
-    public static void treeToDoubleLL(Node root) {
+    static class ListNode {
+        int data;
+        ListNode next;
 
+        ListNode(int data) {
+            this.data = data;
+            this.next = null;
+        }
+    }
+
+    public static ListNode findMedian(ListNode root) {
+        ListNode slow = root;
+        ListNode fast = root;
+        ListNode prev = root;
+
+        while (fast != null && fast.next != null) {
+            prev = slow;
+            slow = slow.next;
+            fast = fast.next.next;
+        }
+
+        if (prev != null) {
+            prev.next = null;
+        }
+
+        return slow;
+
+    }
+
+    public static Node treeToDoubleLL(ListNode head) {
+        if (head == null)
+            return null;
+
+        ListNode mid = findMedian(head);
+        Node root = new Node(mid.data);
+
+        if (head == mid)
+            return root;
+
+        root.left = treeToDoubleLL(head);
+        root.right = treeToDoubleLL(mid.next);
+        return root;
+    }
+
+    public static boolean isBinaryTreeComplete(Node root) {
+        if (root == null)
+            return true;
+
+        Queue<Node> st = new LinkedList<>();
+        st.add(root);
+
+        while (!st.isEmpty()) {
+            Node curr = st.poll();
+            if (curr == null) {
+                while (!st.isEmpty()) {
+                    Node newCurr = st.poll();
+                    if (newCurr != null)
+                        return false;
+                }
+                return true;
+            } else {
+                st.add(curr.left);
+                st.add(curr.right);
+            }
+        }
+        return false;
     }
 
     public static void main(String[] args) {
 
-        int arr[] = { 1, 2, -1, 3, -1, -1, 4, 5, -1, -1, 6, -1, -1 };
+        // int arr[] = { 1, 2, -1, 3, -1, -1, 4, 5, -1, -1, 6, -1, -1 };
+        int arr[] = { 1, 2, 4, -1, -1, 5, -1, -1, 3, 6, -1, -1, -1 };
 
         Node root = createTree(arr);
         // preOrder(root);
@@ -211,6 +276,15 @@ public class BinaryTree {
         // System.out.println(findMax(root));
         // leftView(root);
         // bottomView(root);
-        System.out.println(findCommonAnsister(root, 5, 6).data);
+        // System.out.println(findCommonAnsister(root, 5, 6).data);
+
+        ListNode head = new ListNode(-10);
+        head.next = new ListNode(-3);
+        head.next.next = new ListNode(0);
+        head.next.next.next = new ListNode(5);
+        head.next.next.next.next = new ListNode(9);
+
+        // System.out.println(treeToDoubleLL(head).data);
+        System.out.println(isBinaryTreeComplete(root));
     }
 }
